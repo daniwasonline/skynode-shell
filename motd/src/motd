@@ -8,4 +8,5 @@ const motdDir = fs.readdirSync(path.join("/etc/skynode/motd.d"), { withFileTypes
 for (const motdFi of motdDir) {
     if (motdFi.name.endsWith(".js")) require(path.join("/etc/skynode/motd.d/" + motdFi.name));
     else shell.exec(`sh /etc/skynode/motd.d/${motdFi.name}`);
+    console.log("")
 };
