@@ -15,14 +15,13 @@ curl -LO https://github.com/Dannnington/skynode-shell/releases/download/1.0.0/sk
 
 Make sure to use root permissions when installing Skynode Shell, as non-root permissions will not work. **You should also make sure to give it execution permissions with `chmod +x`, as it won't work otherwise.**
 
-#### PAM configuration
-When using Skynode Shell's MOTD with PAM, make sure to always add this line at the end of `/etc/pam.d/sshd`.
-
+#### PAM configuration with MOTD
+Skynode Shell's MOTD module is currently incompatible with PAM. You can instead create an sshrc file in `/etc/ssh`. Here's an example of an sshrc file being used for the MOTD:
 ```bash
-session required pam_exec.so PATHTOSHELLMOTDHERE
+/bin/skynode-motd
 ```
 
-Replace `PATHTOSHELLMOTDHERE` with the path to Skynode Shell MOTD. This will most likely be `/usr/bin/skynode-motd` or `/bin/skynode-motd`, depending on where you installed it.
+Of course, replace `/bin/skynode-motd` with the path to *your* installation of Skynode Shell MOTD.
 
 ## Where can I find Skynode Shell binaries?
 Skynode Shell binaries can be found [here](https://ci.bean.codes/danny/skynode-shell/-/releases).
