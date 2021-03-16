@@ -7,3 +7,6 @@ Skynode Shell can be used with the binaries or it can be used plain with Node. S
 
 ## Where can I find Skynode Shell binaries?
 Skynode Shell binaries can be found [here](https://ci.bean.codes/danny/skynode-shell/-/releases).
+
+### I don't trust these binaries. Can I build the project myself?
+Although the binaries don't have any spyware or malware, I can see why you'd want to build yourself. There's a handy little Node app in the `build` directory that'll automatically build the binaries for you. Just run `node [name of build script]` and you'll be on your way! :)
