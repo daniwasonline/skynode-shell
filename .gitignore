@@ -1,0 +1,4 @@
+# Node stuff
+node_modules/
+motd/node_modules/
+build/dist/

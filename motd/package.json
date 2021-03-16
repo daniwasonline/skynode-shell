@@ -1,0 +1,14 @@
+{
+    "name": "skynode-motd",
+    "version": "1.0.0",
+    "author": {
+        "name": "Daniel Hyders",
+        "email": "git@bean.codes",
+        "url": "https://www.bean.codes"
+    },
+    "main": "src/motd",
+    "bin": "src/motd",
+    "dependencies": {
+        "shelljs": "^0.8.4"
+    }
+}

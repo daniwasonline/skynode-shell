@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+const shell = require("shelljs");
+const fs = require("fs");
+const path = require("path");
+
+const motdDir = fs.readdirSync(path.join("/etc/skynode/motd.d"), { withFileTypes: true }).filter(cat => cat.isFile());
+
+for (const motdFi of motdDir) {
+    if (motdFi.name.endsWith(".js")) require(path.join("/etc/skynode/motd.d/" + motdFi.name));
+    else shell.exec(`sh /etc/skynode/motd.d/${motdFi.name}`);
+};
