@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+const fs = require("fs");
+const os = require("systeminformation");
+const nativeos = require("os");
+var dateOpt = { weekday: "long", year: "numeric", month: 'long', day: 'numeric' };
+var platform = nativeos.platform();
+function toHumanGB(num) {
+    return (num / (1024 * 1024 * 1024)).toFixed(1);
+}
+
+function getPercentageFromGB(x, y) {
+    return Math.round((x / y) * 100);
+}
+
+async function runtime() {
+    const mem = await os.mem();
+    const memLayout = await os.memLayout();
+    const fs = await os.fsSize();
+    const currentLoad = await os.currentLoad();
+    const processes = await os.processes();
+    const network = await os.networkInterfaces();
+    var filesysstr = "";
+    var networkstr = "";
+    await fs.forEach(filesys => {
+        if (filesys == fs[0]) return filesysstr = filesysstr + `*  ${filesys.fs} (${toHumanGB(filesys.size)}gb) ${toHumanGB(filesys.available)}gb remaining (${filesys.use}% used)\n`
+        filesysstr = filesysstr + `        *  ${filesys.fs} (${toHumanGB(filesys.size)}gb) ${toHumanGB(filesys.available)}gb remaining (${filesys.use}% used)\n`
+    });
+    await network.forEach(int => {
+        if (int == network[0]) return networkstr = networkstr + `*  ${int.iface} (${int.type}): ${int.operstate == "up" ? `Connected (${int.ip4}${int.ip6 ? ` / ${int.ip6}` : ""})` : `Disconnected`}\n`  
+        networkstr = networkstr + `        *  ${int.iface} (${int.type ? int.type : "other"}): ${int.operstate == "up" ? `Connected (${int.ip4}${int.ip6 ? ` / ${int.ip6}` : ""})` : `Disconnected`}\n`        
+    });
+    await console.log(`
+    System information as of ${new Date().toLocaleDateString(undefined, dateOpt)} at ${new Date().toLocaleTimeString(undefined)}
+    
+        == Storage ==
+        ${filesysstr}
+        == Memory & Swap (${memLayout.length} banks) ==
+        *  Memory (${toHumanGB(nativeos.totalmem())}gb): ${toHumanGB(nativeos.freemem())}gb free (${getPercentageFromGB((nativeos.totalmem - nativeos.freemem()), nativeos.totalmem())}% used)
+        *  Swap (${toHumanGB(mem.swaptotal)}gb): ${toHumanGB(mem.swapfree)}gb free (${await getPercentageFromGB(mem.swaptotal - mem.swapfree, mem.swaptotal)}% used)
+        ${nativeos.platform == "win32" ? "" : `
+        == System & Services ==
+        *  Average Load: ${currentLoad.avgLoad}
+        *  Processes (${processes.all}): ${processes.running} running, ${processes.sleeping} inactive
+        `}
+        == Network ==
+        ${networkstr}`);
+};
+
+runtime();
