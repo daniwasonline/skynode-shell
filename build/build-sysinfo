@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+const shell = require("shelljs");
+const path = require("path");
+console.log("Creating binaries for sysinfo..")
+shell.exec(`pkg -t node14-linux ${path.join(__dirname + "/../sysinfo/")} --out-path ${path.join(__dirname + "/dist")}`)
