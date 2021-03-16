@@ -13,7 +13,7 @@ cd /usr/bin
 curl -LO https://github.com/Dannnington/skynode-shell/releases/download/1.0.0/skynode-motd
 ```
 
-Make sure to 
+Make sure to use root permissions when installing Skynode Shell, as non-root permissions will not work.
 
 #### PAM configuration
 When using Skynode Shell's MOTD with PAM, make sure to always add this line at the end of `/etc/pam.d/sshd`.
