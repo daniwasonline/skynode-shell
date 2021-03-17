@@ -1,5 +1,12 @@
 #!/usr/bin/env node
-const shell = require("shelljs");
+const { exec } = require("pkg")
 const path = require("path");
-console.log("Creating binaries for sysinfo..")
-shell.exec(`pkg -t node14-linux ${path.join(__dirname + "/../sysinfo/")} --out-path ${path.join(__dirname + "/dist")}`)
+console.log("Creating binaries for sysinfo..");
+
+(async function () {
+    await exec([`${path.join(__dirname + "/../sysinfo/")}`, `-t`, `node14-linux`, `--out-path`, `${path.join(__dirname + "/dist")}`]);
+    await exec([`${path.join(__dirname + "/../sysinfo/")}`, `-t`, `node14-win`, `--out-path`, `${path.join(__dirname + "/dist")}`]);
+    if (require.main) {
+        await process.exit(0);
+    };
+})();

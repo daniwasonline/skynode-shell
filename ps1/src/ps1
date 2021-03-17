@@ -1,0 +1,61 @@
+#!/usr/bin/env node
+const chalk = require("chalk");
+const fs = require("fs");
+const path = require("path");
+const yml = require("js-yaml");
+const colourSep = "#cc#:";
+const sep = "<--#-->";
+(function () {
+    try {
+        const doc = yml.load(fs.readFileSync(path.join("/etc/skynode/ps1.yml"), 'utf8'));
+        var string = "";
+        var ps1 = doc.ps1.split(sep);
+        if (chalk.supportsColor) {
+            ps1.forEach(f => {
+                let g = f.trim().toLowerCase();
+                if (g.startsWith(colourSep)) {
+                    if (g == colourSep + "green") {
+                        g = "\x1b[32m";
+                    } else if (g == colourSep + "red") {
+                        g = "\x1b[31m";
+                    } else if (g == colourSep + "yellow") {
+                        g = "\x1b[33m";
+                    } else if (g == colourSep + "blue") {
+                        g = "\x1b[34m";
+                    } else if (g == colourSep + "magenta" || g == colourSep + "purple") {
+                        g = "\x1b[35m";
+                    } else if (g == colourSep + "cyan") {
+                        g = "\x1b[36m";
+                    } else if (g == colourSep + "white") {
+                        g = "\x1b[37m";
+                    } else if (g == colourSep + "black") {
+                        g = "\x1b[30m";
+                    };
+                } else {
+                    if (g.includes("\\u")) {
+                        g = g + require("os").userInfo().username;
+                        g = g.replace("\\u", "")
+                    } if (g.includes("\\h")) {
+                        g = g + require("os").hostname;
+                        g = g.replace("\\h", "")
+                    }
+                }
+                
+                string = string + g;
+            });
+            process.stdout.write(string + "\x1b[0m")
+        } else {
+            ps1.forEach(f => {
+                let g = f.trim().toLowerCase();
+                if (g.startsWith(colourSep)) {
+                    g = "";
+                };
+                string = string + g;
+            });
+            process.stdout.write(string);
+        };
+    } catch (e) {
+        process.stdout.write(`${chalk.blue("skynode-shell:")} `)
+        console.log(e)
+    }
+})();

@@ -24,7 +24,7 @@ Skynode Shell's MOTD module is currently incompatible with PAM. You can instead 
 Of course, replace `/bin/skynode-motd` with the path to *your* installation of Skynode Shell MOTD.
 
 ## Where can I find Skynode Shell binaries?
-Skynode Shell binaries can be found [here](https://ci.bean.codes/danny/skynode-shell/-/releases).
+Skynode Shell binaries can be found in the Releases section of this repository.
 
 ### I don't trust these binaries. Can I build the project myself?
-Although the binaries don't have any spyware or malware, I can see why you'd want to build yourself. There's a handy little Node app in the `build` directory that'll automatically build the binaries for you. Just run `node [name of build script]` and you'll be on your way! :)
+Although the binaries don't have any spyware or malware, I can see why you'd want to build yourself. There's a handy little Node app in the `build` directory that'll automatically build the binaries for you. You'll first need to install dependencies in the build directory by running `npm i` in there. The only dependency is `pkg`, so if you already have it globally installed then you should be set. Afterward, just run `node [name of build script]` and you'll be on your way! :)

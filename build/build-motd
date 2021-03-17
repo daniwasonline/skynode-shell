@@ -1,5 +1,12 @@
 #!/usr/bin/env node
-const shell = require("shelljs");
 const path = require("path");
-console.log("Creating binaries for motd..")
-shell.exec(`pkg -t node14-linux ${path.join(__dirname + "/../motd/")} --out-path ${path.join(__dirname + "/dist")}`)
+const { exec } = require("pkg");
+console.log("Creating binaries for motd..");
+
+(async function () {
+    await exec([`${path.join(__dirname + "/../motd/")}`, `-t`, `node14-linux`, `--out-path`, `${path.join(__dirname + "/dist")}`]);
+    await exec([`${path.join(__dirname + "/../motd/")}`, `-t`, `node14-win`, `--out-path`, `${path.join(__dirname + "/dist")}`]);
+    if (require.main) {
+        await process.exit(0);
+    };
+})();

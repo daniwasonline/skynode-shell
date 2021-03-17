@@ -1,4 +1,4 @@
 # Node stuff
 node_modules/
-motd/node_modules/
 build/dist/
+package-lock.json

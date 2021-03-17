@@ -23,11 +23,11 @@ async function runtime() {
     var networkstr = "";
     await fs.forEach(filesys => {
         if (filesys == fs[0]) return filesysstr = filesysstr + `*  ${filesys.fs} (${toHumanGB(filesys.size)}gb) ${toHumanGB(filesys.available)}gb remaining (${filesys.use}% used)\n`
-        filesysstr = filesysstr + `        *  ${filesys.fs} (${toHumanGB(filesys.size)}gb) ${toHumanGB(filesys.available)}gb remaining (${filesys.use}% used)\n`
+        filesysstr = filesysstr + `*  ${filesys.fs} (${toHumanGB(filesys.size)}gb) ${toHumanGB(filesys.available)}gb remaining (${filesys.use}% used)\n`
     });
     await network.forEach(int => {
         if (int == network[0]) return networkstr = networkstr + `*  ${int.iface} (${int.type}): ${int.operstate == "up" ? `Connected (${int.ip4 ? int.ip4 + " / " : ""}${int.ip6 ? `${int.ip6}` : ""})` : `Disconnected`}\n`  
-        networkstr = networkstr + `        *  ${int.iface} (${int.type ? int.type : "other"}): ${int.operstate == "up" ? `Connected (${int.ip4 ? int.ip4 + " / " : ""}${int.ip6 ? `${int.ip6}` : ""})` : `Disconnected`}\n`        
+        networkstr = networkstr + `*  ${int.iface} (${int.type ? int.type : "other"}): ${int.operstate == "up" ? `Connected (${int.ip4 ? int.ip4 + " / " : ""}${int.ip6 ? `${int.ip6}` : ""})` : `Disconnected`}\n`        
     });
     await console.log(`
 System information as of ${new Date().toLocaleDateString(undefined, dateOpt)} at ${new Date().toLocaleTimeString(undefined)}

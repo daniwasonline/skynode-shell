@@ -1,0 +1,7 @@
+{
+    "name": "skynode-builder",
+    "version": "1.0.0b",
+    "dependencies": {
+        "pkg": "^4.4.9"
+    }
+}
