@@ -30,20 +30,20 @@ async function runtime() {
         networkstr = networkstr + `        *  ${int.iface} (${int.type ? int.type : "other"}): ${int.operstate == "up" ? `Connected (${int.ip4 ? int.ip4 + " / " : ""}${int.ip6 ? `${int.ip6}` : ""})` : `Disconnected`}\n`        
     });
     await console.log(`
-    System information as of ${new Date().toLocaleDateString(undefined, dateOpt)} at ${new Date().toLocaleTimeString(undefined)}
-    
-        == Storage ==
-        ${filesysstr}
-        == Memory & Swap (${memLayout.length} banks) ==
-        *  Memory (${toHumanGB(nativeos.totalmem())}gb): ${toHumanGB(nativeos.freemem())}gb free (${getPercentageFromGB((nativeos.totalmem - nativeos.freemem()), nativeos.totalmem())}% used)
-        *  Swap (${toHumanGB(mem.swaptotal)}gb): ${toHumanGB(mem.swapfree)}gb free (${await getPercentageFromGB(mem.swaptotal - mem.swapfree, mem.swaptotal)}% used)
-        ${nativeos.platform == "win32" ? "" : `
-        == System & Services ==
-        *  Average Load: ${currentLoad.avgLoad}
-        *  Processes (${processes.all}): ${processes.running} running, ${processes.sleeping} inactive
-        `}
-        == Network ==
-        ${networkstr}`);
-};
+System information as of ${new Date().toLocaleDateString(undefined, dateOpt)} at ${new Date().toLocaleTimeString(undefined)}
+
+== Storage ==
+${filesysstr}
+== Memory & Swap (${memLayout.length} banks) ==
+*  Memory (${toHumanGB(nativeos.totalmem())}gb): ${toHumanGB(nativeos.freemem())}gb free (${getPercentageFromGB((nativeos.totalmem - nativeos.freemem()), nativeos.totalmem())}% used)
+*  Swap (${toHumanGB(mem.swaptotal)}gb): ${toHumanGB(mem.swapfree)}gb free (${await getPercentageFromGB(mem.swaptotal - mem.swapfree, mem.swaptotal)}% used)
+${nativeos.platform == "win32" ? "" : `
+== System & Services ==
+*  Average Load: ${currentLoad.avgLoad}
+*  Processes (${processes.all}): ${processes.running} running, ${processes.sleeping} inactive
+`}
+== Network ==
+${networkstr}`);
+    };
 
 runtime();
